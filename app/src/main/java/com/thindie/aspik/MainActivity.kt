@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -139,22 +140,36 @@ class MainActivity : ComponentActivity() {
                   when (route.section as HomeSection) {
                     is HomeSection.Main -> {
                       Box(modifier = Modifier.systemBarsPadding()) {
-                        route.content.invoke()
+                        MainPlaceholder()
                         BottomNavigationBar(
                           modifier = Modifier.align(Alignment.BottomCenter),
                           onMainClick = { switchToMain() },
                           onSettingsClick = { switchToSettings() },
+                          onSpiksClick = { switchToSpiks() },
                           selected = route.section,
                         )
                       }
                     }
                     is HomeSection.Settings -> {
                       Box(modifier = Modifier.systemBarsPadding()) {
-                        route.content.invoke()
+                        SettingsPlaceholder()
                         BottomNavigationBar(
                           modifier = Modifier.align(Alignment.BottomCenter),
                           onMainClick = { switchToMain() },
                           onSettingsClick = {},
+                          onSpiksClick = { switchToSpiks() },
+                          selected = route.section,
+                        )
+                      }
+                    }
+                    is HomeSection.Spiks -> {
+                      Box(modifier = Modifier.systemBarsPadding()) {
+                        SpiksPlaceholder()
+                        BottomNavigationBar(
+                          modifier = Modifier.align(Alignment.BottomCenter),
+                          onMainClick = { switchToMain() },
+                          onSettingsClick = { switchToSettings() },
+                          onSpiksClick = {},
                           selected = route.section,
                         )
                       }
@@ -189,6 +204,9 @@ class MainActivity : ComponentActivity() {
 
   private fun switchToSettings() {
   }
+
+  private fun switchToSpiks() {
+  }
 }
 
 @Composable
@@ -196,6 +214,7 @@ fun BottomNavigationBar(
   modifier: Modifier = Modifier,
   onMainClick: () -> Unit,
   onSettingsClick: () -> Unit,
+  onSpiksClick: () -> Unit,
   selected: Section,
 ) {
   val sections =
@@ -203,6 +222,7 @@ fun BottomNavigationBar(
       listOf(
         HomeSection.Main,
         HomeSection.Settings,
+        HomeSection.Spiks,
       )
     }
 
@@ -215,19 +235,27 @@ fun BottomNavigationBar(
     verticalAlignment = Alignment.CenterVertically,
   ) {
     sections.forEach {
-      val (icon, title) =
+      val iconResId: Int =
         when (it) {
-          HomeSection.Main -> 1 to 1
-          HomeSection.Settings -> 2 to 2
+          HomeSection.Main -> R.drawable.ic_main
+          HomeSection.Settings -> R.drawable.ic_settings
+          HomeSection.Spiks -> R.drawable.ic_spiks
+        }
+      val titleResId: Int =
+        when (it) {
+          HomeSection.Main -> R.string.main_title
+          HomeSection.Settings -> R.string.settings_title
+          HomeSection.Spiks -> R.string.spiks_title
         }
 
       Section(
-        title = stringResource(title),
-        icon = painterResource(icon),
+        title = stringResource(titleResId),
+        icon = painterResource(iconResId),
         onClick = {
           when (it) {
             HomeSection.Main -> onMainClick.invoke()
             HomeSection.Settings -> onSettingsClick.invoke()
+            HomeSection.Spiks -> onSpiksClick.invoke()
           }
         },
         isSelected = selected == it,
@@ -286,6 +314,39 @@ fun Section(
   }
 }
 
+@Composable
+fun MainPlaceholder() {
+  Column(
+    modifier = Modifier.fillMaxSize().padding(16.dp),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally,
+  ) {
+    Text("Main", style = AppTheme.typography.headlineMedium, color = AppTheme.colors.contentPrimary)
+  }
+}
+
+@Composable
+fun SettingsPlaceholder() {
+  Column(
+    modifier = Modifier.fillMaxSize().padding(16.dp),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally,
+  ) {
+    Text("Settings", style = AppTheme.typography.headlineMedium, color = AppTheme.colors.contentPrimary)
+  }
+}
+
+@Composable
+fun SpiksPlaceholder() {
+  Column(
+    modifier = Modifier.fillMaxSize().padding(16.dp),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally,
+  ) {
+    Text("Spiks", style = AppTheme.typography.headlineMedium, color = AppTheme.colors.contentPrimary)
+  }
+}
+
 @Immutable
 sealed interface HomeSection : Section {
   @Immutable
@@ -293,4 +354,7 @@ sealed interface HomeSection : Section {
 
   @Immutable
   data object Settings : HomeSection
+
+  @Immutable
+  data object Spiks : HomeSection
 }
