@@ -14,4 +14,7 @@ fun inputRoute(homeFlow: HomeFlow) =
     routeContent = { screenScope: ScreenScope<InputState, InputCommand> ->
       InputScreenContent(screenScope)
     },
+    stateSink = { screenScope: ScreenScope<InputState, InputCommand> ->
+      screenScope.inputSubscriptions(homeFlow.inputRepository)
+    },
   )
