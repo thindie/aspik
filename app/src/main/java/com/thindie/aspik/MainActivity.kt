@@ -53,6 +53,10 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.thindie.aspik.feature.home.HomeFlow
+import com.thindie.aspik.feature.settings.SettingsFlow
+import com.thindie.aspik.feature.settings.main.settingsRoute
+import com.thindie.aspik.feature.spiks.SpiksFlow
+import com.thindie.aspik.feature.spiks.list.spiksRoute
 import com.thindie.engine.core.Deeplink
 import com.thindie.engine.core.Log
 import com.thindie.engine.core.Route
@@ -220,9 +224,39 @@ class MainActivity : ComponentActivity() {
   }
 
   private fun switchToSettings() {
+    val settingsFlow = SettingsFlow(router)
+    settingsFlow.onFinishBuilder { result ->
+      when (result) {
+        SettingsFlow.Result.Spiks -> {
+          switchToSpiks()
+        }
+        SettingsFlow.Result.Success -> {
+        }
+        SettingsFlow.Result.Main -> {
+          switchToMain()
+        }
+      }
+    }
+
+    router.replaceTop(settingsRoute(settingsFlow))
   }
 
   private fun switchToSpiks() {
+    val spiksFlow = SpiksFlow(router)
+    spiksFlow.onFinishBuilder { result ->
+      when (result) {
+        SpiksFlow.Result.Main -> {
+          switchToMain()
+        }
+        SpiksFlow.Result.Success -> {
+        }
+        SpiksFlow.Result.Settings -> {
+          switchToSettings()
+        }
+      }
+    }
+
+    router.replaceTop(spiksRoute(spiksFlow))
   }
 }
 
