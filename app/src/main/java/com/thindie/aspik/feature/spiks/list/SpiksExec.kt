@@ -1,9 +1,6 @@
 package com.thindie.aspik.feature.spiks.list
 
 import com.thindie.aspik.feature.spiks.SpiksFlow
-import com.thindie.aspik.feature.spiks.domain.Id
-import com.thindie.aspik.feature.spiks.domain.SpeekNote
-import java.util.UUID
 
 internal suspend fun SpiksFlow.spiksExec(
   state: SpiksState,
@@ -11,21 +8,14 @@ internal suspend fun SpiksFlow.spiksExec(
 ): SpiksState? {
   return when (command) {
     is SpiksCommand.OpenNewNote -> {
-      if (command.text.isEmpty()) {
-        val id = UUID.randomUUID().toString()
-        spiksRepository.save(SpeekNote(Id(id), ""))
-        null
-      } else {
-        null
-      }
-    }
-
-    is SpiksCommand.EditExistingNote -> {
+      // todo pin note to repository
+      goOperateNote()
       null
     }
 
     is SpiksCommand.UpdateNote -> {
-      spiksRepository.update(command.note)
+      // todo pin note to repository
+      goOperateNote()
       null
     }
 

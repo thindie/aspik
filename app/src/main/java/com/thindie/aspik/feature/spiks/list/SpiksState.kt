@@ -1,7 +1,7 @@
 package com.thindie.aspik.feature.spiks.list
 
 import androidx.compose.runtime.Immutable
-import com.thindie.aspik.feature.spiks.domain.SpeekNote
+import com.thindie.aspik.domain.SpeekNote
 import com.thindie.engine.core.ViewState
 
 @Immutable

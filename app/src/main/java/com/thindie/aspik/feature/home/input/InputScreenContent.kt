@@ -14,6 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.thindie.aspik.R
 import com.thindie.engine.core.ScreenScope
+import com.thindie.engine.core.Section
+import com.thindie.engine.uikit.Action
 import com.thindie.engine.uikit.AppScreen
 import com.thindie.engine.uikit.Button
 import com.thindie.engine.uikit.TextField
@@ -21,11 +23,20 @@ import com.thindie.engine.uikit.VSpacer
 
 @Composable
 internal fun InputScreenContent(scope: ScreenScope<InputState, InputCommand>) {
+  val state by scope.state.collectAsState()
   AppScreen(
     screenScope = scope,
+    primary =
+      if (state.section is Section.Leaf) {
+        Action(
+          listener = { scope.send(InputCommand.Back) },
+          resRef = R.drawable.ic_main,
+        )
+      } else {
+        null
+      },
     title = stringResource(R.string.input_title),
   ) {
-    val state by scope.state.collectAsState()
     Column(
       modifier =
         Modifier

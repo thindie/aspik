@@ -1,8 +1,8 @@
 package com.thindie.aspik.feature.spiks.list
 
 import com.thindie.aspik.HomeSection
+import com.thindie.aspik.domain.SpeekNote
 import com.thindie.aspik.feature.spiks.SpiksFlow
-import com.thindie.aspik.feature.spiks.domain.SpeekNote
 import com.thindie.aspik.feature.spiks.domain.SpiksRepository
 import com.thindie.engine.core.RouteFactory
 import com.thindie.engine.core.ScreenScope

@@ -8,4 +8,6 @@ interface InputRepository {
   val convertedText: Flow<String>
 
   suspend fun sendText(text: String)
+
+  fun setNote()
 }

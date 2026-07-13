@@ -5,9 +5,9 @@ import com.thindie.aspik.feature.home.HomeFlow
 import com.thindie.aspik.feature.home.input.data.InputRepositoryImpl
 import com.thindie.aspik.feature.home.input.domain.InputRepository
 import com.thindie.aspik.feature.spiks.SpiksFlow
+import com.thindie.aspik.feature.spiks.data.ReactiveStorage
 import com.thindie.aspik.feature.spiks.data.SpiksRepositoryImpl
 import com.thindie.aspik.feature.spiks.domain.SpiksRepository
-import com.thindie.aspik.feature.spiks.storage.ReactiveStorage
 
 class ApplicationScope private constructor() {
   private var inputRepository: InputRepository? = null
@@ -28,6 +28,11 @@ class ApplicationScope private constructor() {
       spiksRepository = SpiksRepositoryImpl(storage)
     }
     spiksFlow.spiksRepository = this.spiksRepository!!
+
+    if (inputRepository == null) {
+      inputRepository = InputRepositoryImpl(applicationContext)
+    }
+    spiksFlow.inputRepository = this.inputRepository!!
   }
 
   companion object {

@@ -1,4 +1,4 @@
-package com.thindie.aspik.feature.spiks.storage
+package com.thindie.aspik.feature.spiks.data
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlin.collections.iterator
 
 internal class ReactiveStorage(
   context: Context,

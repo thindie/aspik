@@ -256,6 +256,7 @@ class MainActivity : ComponentActivity() {
           switchToSettings()
         }
       }
+      spiksFlow.switchFlow()
     }
 
     router.replaceTop(spiksRoute(spiksFlow))

@@ -1,9 +1,8 @@
 package com.thindie.aspik.feature.spiks.data
 
-import com.thindie.aspik.feature.spiks.domain.Id
-import com.thindie.aspik.feature.spiks.domain.SpeekNote
+import com.thindie.aspik.domain.Id
+import com.thindie.aspik.domain.SpeekNote
 import com.thindie.aspik.feature.spiks.domain.SpiksRepository
-import com.thindie.aspik.feature.spiks.storage.ReactiveStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

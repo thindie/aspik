@@ -1,13 +1,13 @@
 package com.thindie.aspik.feature.home.input
 
-import com.thindie.aspik.feature.home.HomeFlow
 import com.thindie.aspik.feature.home.input.domain.InputRepository
+import com.thindie.engine.core.ScreenFlow
 import com.thindie.engine.core.ScreenScope
 import com.thindie.engine.core.stateSink
 import com.thindie.engine.core.sub
 import com.thindie.engine.core.transition
 
-internal fun HomeFlow.inputExec(
+internal fun ScreenFlow<*, *>.inputExec(
   state: InputState,
   command: InputCommand,
 ): InputState? {

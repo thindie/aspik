@@ -1,5 +1,7 @@
 package com.thindie.aspik.feature.spiks.domain
 
+import com.thindie.aspik.domain.Id
+import com.thindie.aspik.domain.SpeekNote
 import kotlinx.coroutines.flow.Flow
 
 interface SpiksRepository {

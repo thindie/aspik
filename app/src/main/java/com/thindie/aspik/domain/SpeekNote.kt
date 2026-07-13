@@ -1,4 +1,4 @@
-package com.thindie.aspik.feature.spiks.domain
+package com.thindie.aspik.domain
 
 import androidx.compose.runtime.Immutable
 
