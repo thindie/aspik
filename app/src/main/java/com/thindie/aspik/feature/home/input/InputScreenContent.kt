@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.thindie.engine.core.ScreenScope
 import com.thindie.engine.uikit.AppScreen
@@ -21,7 +22,7 @@ import com.thindie.engine.uikit.VSpacer
 internal fun InputScreenContent(scope: ScreenScope<InputState, InputCommand>) {
   AppScreen(
     screenScope = scope,
-    title = "Input",
+    title = stringResource(R.string.input_title),
   ) {
     val state by scope.state.collectAsState()
     Column(
@@ -34,7 +35,7 @@ internal fun InputScreenContent(scope: ScreenScope<InputState, InputCommand>) {
       TextField(
         value = state.input,
         onValueChange = { scope.send(InputCommand.SendText(it)) },
-        placeholder = "Type or speak...",
+        placeholder = stringResource(R.string.input_placeholder),
         singleLine = false,
         maxLines = 6,
       )
@@ -42,7 +43,9 @@ internal fun InputScreenContent(scope: ScreenScope<InputState, InputCommand>) {
       VSpacer(16.dp)
 
       Button(
-        text = if (state.isListening) "Listening..." else "Speak",
+        text = stringResource(
+          id = if (state.isListening) R.string.input_listening else R.string.input_speak,
+        ),
         onClick = { scope.send(InputCommand.Listen) },
         loading = state.isListening,
       )
@@ -52,7 +55,7 @@ internal fun InputScreenContent(scope: ScreenScope<InputState, InputCommand>) {
         horizontalArrangement = Arrangement.End,
       ) {
         Button(
-          text = "Send",
+          text = stringResource(R.string.input_send),
           onClick = { scope.send(InputCommand.SendText(state.input)) },
           enabled = state.input.isNotBlank(),
         )
