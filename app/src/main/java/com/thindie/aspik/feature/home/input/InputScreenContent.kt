@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.thindie.aspik.R
 import com.thindie.engine.core.ScreenScope
 import com.thindie.engine.uikit.AppScreen
 import com.thindie.engine.uikit.Button
@@ -43,9 +44,10 @@ internal fun InputScreenContent(scope: ScreenScope<InputState, InputCommand>) {
       VSpacer(16.dp)
 
       Button(
-        text = stringResource(
-          id = if (state.isListening) R.string.input_listening else R.string.input_speak,
-        ),
+        text =
+          stringResource(
+            id = if (state.isListening) R.string.input_listening else R.string.input_speak,
+          ),
         onClick = { scope.send(InputCommand.Listen) },
         loading = state.isListening,
       )

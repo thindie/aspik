@@ -244,6 +244,7 @@ class MainActivity : ComponentActivity() {
 
   private fun switchToSpiks() {
     val spiksFlow = SpiksFlow(router)
+    (application as Application).requireAppScope().inject(spiksFlow)
     spiksFlow.onFinishBuilder { result ->
       when (result) {
         SpiksFlow.Result.Main -> {
