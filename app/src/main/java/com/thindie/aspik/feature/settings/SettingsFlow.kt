@@ -1,4 +1,22 @@
 package com.thindie.aspik.feature.settings
 
-class SettingsFlow {
+import com.thindie.aspik.feature.settings.main.settingsRoute
+import com.thindie.engine.core.Route
+import com.thindie.engine.core.Router
+import com.thindie.engine.core.ScreenFlow
+
+class SettingsFlow(val router: Router) : ScreenFlow<Route, SettingsFlow.Result>(router) {
+  override fun start() {
+    go(settingsRoute(this))
+  }
+
+  fun switchFlow() {
+    router.replaceTop(settingsRoute(this))
+  }
+
+  enum class Result {
+    Main,
+    Success,
+    Spiks,
+  }
 }
