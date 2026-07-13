@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.thindie.aspik.feature.home.HomeFlow
 import com.thindie.engine.core.Deeplink
 import com.thindie.engine.core.Log
 import com.thindie.engine.core.Route
@@ -200,6 +201,22 @@ class MainActivity : ComponentActivity() {
   }
 
   private fun switchToMain() {
+    val homeFlow = HomeFlow(router)
+    homeFlow.onFinishBuilder { result ->
+      when (result) {
+        HomeFlow.Result.Spiks -> {
+          switchToSpiks()
+        }
+        HomeFlow.Result.Success -> {
+        }
+        HomeFlow.Result.Settings -> {
+          switchToSettings()
+        }
+      }
+    }
+
+    homeFlow
+      .switchFlow()
   }
 
   private fun switchToSettings() {
@@ -317,7 +334,10 @@ fun Section(
 @Composable
 fun MainPlaceholder() {
   Column(
-    modifier = Modifier.fillMaxSize().padding(16.dp),
+    modifier =
+      Modifier
+        .fillMaxSize()
+        .padding(16.dp),
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
@@ -328,7 +348,10 @@ fun MainPlaceholder() {
 @Composable
 fun SettingsPlaceholder() {
   Column(
-    modifier = Modifier.fillMaxSize().padding(16.dp),
+    modifier =
+      Modifier
+        .fillMaxSize()
+        .padding(16.dp),
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
@@ -339,7 +362,10 @@ fun SettingsPlaceholder() {
 @Composable
 fun SpiksPlaceholder() {
   Column(
-    modifier = Modifier.fillMaxSize().padding(16.dp),
+    modifier =
+      Modifier
+        .fillMaxSize()
+        .padding(16.dp),
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
