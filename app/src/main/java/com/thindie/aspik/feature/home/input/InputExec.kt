@@ -7,7 +7,8 @@ import com.thindie.engine.core.stateSink
 import com.thindie.engine.core.sub
 import com.thindie.engine.core.transition
 
-internal fun ScreenFlow<*, *>.inputExec(
+internal suspend fun ScreenFlow<*, *>.inputExec(
+  repository: InputRepository,
   state: InputState,
   command: InputCommand,
 ): InputState? {
@@ -17,12 +18,12 @@ internal fun ScreenFlow<*, *>.inputExec(
       null
     }
     InputCommand.Listen -> {
-      // TODO: trigger STT listening via repository
+      repository.listen()
       state.copy(isListening = true)
     }
     is InputCommand.SendText -> {
-      // TODO: implement actual send logic
-      null
+      repository.sendText(command.text)
+      state.copy(isListening = false)
     }
   }
 }

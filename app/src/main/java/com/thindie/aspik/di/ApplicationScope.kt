@@ -8,8 +8,10 @@ import com.thindie.aspik.feature.spiks.SpiksFlow
 import com.thindie.aspik.feature.spiks.data.ReactiveStorage
 import com.thindie.aspik.feature.spiks.data.SpiksRepositoryImpl
 import com.thindie.aspik.feature.spiks.domain.SpiksRepository
+import okhttp3.OkHttpClient
 
 class ApplicationScope private constructor() {
+  private val client = OkHttpClient()
   private var inputRepository: InputRepository? = null
   private var spiksRepository: SpiksRepository? = null
   private lateinit var applicationContext: Application
@@ -18,7 +20,7 @@ class ApplicationScope private constructor() {
 
   fun inject(homeFlow: HomeFlow) {
     if (inputRepository == null) {
-      inputRepository = InputRepositoryImpl(applicationContext)
+      inputRepository = InputRepositoryImpl(applicationContext, client)
     }
     homeFlow.inputRepository = this.inputRepository!!
   }
@@ -30,7 +32,7 @@ class ApplicationScope private constructor() {
     spiksFlow.spiksRepository = this.spiksRepository!!
 
     if (inputRepository == null) {
-      inputRepository = InputRepositoryImpl(applicationContext)
+      inputRepository = InputRepositoryImpl(applicationContext, client)
     }
     spiksFlow.inputRepository = this.inputRepository!!
   }

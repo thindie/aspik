@@ -8,4 +8,12 @@
     <string name="input_listening">Listening...</string>
     <string name="input_speak">Speak</string>
     <string name="input_send">Send</string>
+
+    <!-- Server settings -->
+    <string name="server_title">Server Address</string>
+    <string name="server_ip_hint">IP address (e.g. 192.168.0.1)</string>
+    <string name="server_port_hint">Port (default: 8080)</string>
+    <string name="server_save">Save</string>
+    <string name="server_saved">Server address saved</string>
+
 </resources>

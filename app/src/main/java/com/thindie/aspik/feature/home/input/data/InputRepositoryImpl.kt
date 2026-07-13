@@ -7,13 +7,16 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import com.thindie.aspik.feature.home.input.domain.InputRepository
+import com.thindie.aspik.util.NetworkUtils
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import okhttp3.OkHttpClient
 
 internal class InputRepositoryImpl(
   private val context: Context,
+  private val client: OkHttpClient,
 ) : InputRepository {
   private val textChannel =
     MutableSharedFlow<String>(
@@ -80,6 +83,10 @@ internal class InputRepositoryImpl(
   override val convertedText: Flow<String> = textChannel.asSharedFlow()
 
   override suspend fun sendText(text: String) {
-    // TODO: implement actual text sending logic (e.g. post to backend, save to DB, etc.)
+    NetworkUtils.sendText(client, context, text).getOrThrow()
+  }
+
+  override fun setNote() {
+    // TODO: implement note setting logic
   }
 }
