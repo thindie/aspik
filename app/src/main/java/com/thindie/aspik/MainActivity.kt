@@ -206,6 +206,7 @@ class MainActivity : ComponentActivity() {
 
   private fun switchToMain() {
     val homeFlow = HomeFlow(router)
+    (application as Application).requireAppScope().inject(homeFlow)
     homeFlow.onFinishBuilder { result ->
       when (result) {
         HomeFlow.Result.Spiks -> {
