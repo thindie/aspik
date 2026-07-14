@@ -11,5 +11,7 @@ internal fun SettingsFlow.settingsExec(
       back()
       null
     }
+
+    SettingsCommand.OpenIp -> TODO()
   }
 }

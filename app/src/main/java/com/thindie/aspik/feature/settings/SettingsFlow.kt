@@ -1,5 +1,6 @@
 package com.thindie.aspik.feature.settings
 
+import com.thindie.aspik.feature.settings.ip.settingsIpRoute
 import com.thindie.aspik.feature.settings.main.settingsRoute
 import com.thindie.engine.core.Route
 import com.thindie.engine.core.Router
@@ -12,6 +13,12 @@ class SettingsFlow(val router: Router) : ScreenFlow<Route, SettingsFlow.Result>(
 
   fun switchFlow() {
     router.replaceTop(settingsRoute(this))
+  }
+
+  fun openIpScreen() {
+    go(
+      settingsIpRoute(),
+    )
   }
 
   enum class Result {
