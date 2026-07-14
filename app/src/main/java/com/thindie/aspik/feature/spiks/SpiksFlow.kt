@@ -2,6 +2,7 @@ package com.thindie.aspik.feature.spiks
 
 import com.thindie.aspik.feature.home.input.domain.InputRepository
 import com.thindie.aspik.feature.home.input.inputRoute
+import com.thindie.aspik.feature.settings.domain.SettingsRepository
 import com.thindie.aspik.feature.spiks.domain.SpiksRepository
 import com.thindie.aspik.feature.spiks.list.spiksRoute
 import com.thindie.engine.core.Route
@@ -12,6 +13,8 @@ import com.thindie.engine.core.Section
 class SpiksFlow(val router: Router) : ScreenFlow<Route, SpiksFlow.Result>(router) {
   lateinit var spiksRepository: SpiksRepository
   lateinit var inputRepository: InputRepository
+
+  lateinit var settingsRepository: SettingsRepository
 
   override fun start() {
     go(spiksRoute(this))
@@ -27,6 +30,7 @@ class SpiksFlow(val router: Router) : ScreenFlow<Route, SpiksFlow.Result>(router
         inputRepository = inputRepository,
         screenFlow = this,
         section = Section.Leaf,
+        settingsRepository = settingsRepository,
       ),
     )
   }

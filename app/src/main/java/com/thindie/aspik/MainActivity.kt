@@ -228,6 +228,9 @@ class MainActivity : ComponentActivity() {
 
   private fun switchToSettings() {
     val settingsFlow = SettingsFlow(router)
+    (application as Application)
+      .requireAppScope()
+      .inject(settingsFlow)
     settingsFlow.onFinishBuilder { result ->
       when (result) {
         SettingsFlow.Result.Spiks -> {

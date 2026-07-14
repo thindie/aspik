@@ -31,7 +31,11 @@ internal suspend fun ScreenFlow<*, *>.inputExec(
         }
         else -> repository.sendText(command.text)
       }
-      state.copy(input = "")
+      if (state.clearInputOnSend) {
+        state.copy(input = "")
+      } else {
+        null
+      }
     }
 
     is InputCommand.Input -> {
