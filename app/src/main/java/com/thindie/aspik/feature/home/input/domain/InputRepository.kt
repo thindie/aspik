@@ -9,5 +9,7 @@ interface InputRepository {
 
   suspend fun sendText(text: String)
 
-  fun setNote()
+  fun deleteAccumulated()
+
+  fun listenInvalidated()
 }

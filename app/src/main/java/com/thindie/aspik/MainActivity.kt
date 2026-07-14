@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -82,6 +81,7 @@ class MainActivity : ComponentActivity() {
     setContent {
       LaunchedEffect(Unit) {
         val deeplink = parseIntent()
+        switchToMain()
       }
       val themeSwitcher =
         remember {
@@ -145,7 +145,7 @@ class MainActivity : ComponentActivity() {
                   when (route.section as HomeSection) {
                     is HomeSection.Main -> {
                       Box(modifier = Modifier.systemBarsPadding()) {
-                        MainPlaceholder()
+                        route.content.invoke()
                         BottomNavigationBar(
                           modifier = Modifier.align(Alignment.BottomCenter),
                           onMainClick = { switchToMain() },
@@ -157,7 +157,7 @@ class MainActivity : ComponentActivity() {
                     }
                     is HomeSection.Settings -> {
                       Box(modifier = Modifier.systemBarsPadding()) {
-                        SettingsPlaceholder()
+                        route.content.invoke()
                         BottomNavigationBar(
                           modifier = Modifier.align(Alignment.BottomCenter),
                           onMainClick = { switchToMain() },
@@ -169,7 +169,7 @@ class MainActivity : ComponentActivity() {
                     }
                     is HomeSection.Spiks -> {
                       Box(modifier = Modifier.systemBarsPadding()) {
-                        SpiksPlaceholder()
+                        route.content.invoke()
                         BottomNavigationBar(
                           modifier = Modifier.align(Alignment.BottomCenter),
                           onMainClick = { switchToMain() },
@@ -365,48 +365,6 @@ fun Section(
       maxLines = 1,
     )
     VSpacer(8.dp)
-  }
-}
-
-@Composable
-fun MainPlaceholder() {
-  Column(
-    modifier =
-      Modifier
-        .fillMaxSize()
-        .padding(16.dp),
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally,
-  ) {
-    Text("Main", style = AppTheme.typography.headlineMedium, color = AppTheme.colors.contentPrimary)
-  }
-}
-
-@Composable
-fun SettingsPlaceholder() {
-  Column(
-    modifier =
-      Modifier
-        .fillMaxSize()
-        .padding(16.dp),
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally,
-  ) {
-    Text("Settings", style = AppTheme.typography.headlineMedium, color = AppTheme.colors.contentPrimary)
-  }
-}
-
-@Composable
-fun SpiksPlaceholder() {
-  Column(
-    modifier =
-      Modifier
-        .fillMaxSize()
-        .padding(16.dp),
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally,
-  ) {
-    Text("Spiks", style = AppTheme.typography.headlineMedium, color = AppTheme.colors.contentPrimary)
   }
 }
 
