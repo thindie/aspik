@@ -12,6 +12,8 @@ internal fun SettingsFlow.settingsExec(
       null
     }
 
+    SettingsCommand.ToggleDeleteTextOnSend -> SettingsState(deleteTextOnSend = !state.deleteTextOnSend)
+
     SettingsCommand.OpenIp -> TODO()
   }
 }

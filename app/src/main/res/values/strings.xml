@@ -20,5 +20,6 @@
     <string name="settings_ip_title">IP Address</string>
     <string name="settings_ip_hint">Enter server IP (e.g. 192.168.0.1)</string>
     <string name="settings_ip_save">Save</string>
+    <string name="settings_delete_text_on_send">Delete text after sending</string>
 
 </resources>

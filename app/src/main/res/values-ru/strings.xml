@@ -21,5 +21,6 @@
     <string name="settings_ip_title">IP-адрес</string>
     <string name="settings_ip_hint">Введите IP-адрес сервера (например, 192.168.0.1)</string>
     <string name="settings_ip_save">Сохранить</string>
+    <string name="settings_delete_text_on_send">Удалять текст после отправки</string>
 
 </resources>

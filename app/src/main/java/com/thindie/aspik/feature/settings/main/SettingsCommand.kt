@@ -6,4 +6,6 @@ internal sealed interface SettingsCommand : Command {
   data object Back : SettingsCommand
 
   data object OpenIp : SettingsCommand
+
+  data object ToggleDeleteTextOnSend : SettingsCommand
 }
