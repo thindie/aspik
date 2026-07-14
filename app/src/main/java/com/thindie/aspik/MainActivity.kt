@@ -206,7 +206,9 @@ class MainActivity : ComponentActivity() {
 
   private fun switchToMain() {
     val homeFlow = HomeFlow(router)
-    (application as Application).requireAppScope().inject(homeFlow)
+    (application as Application)
+      .requireAppScope()
+      .inject(homeFlow)
     homeFlow.onFinishBuilder { result ->
       when (result) {
         HomeFlow.Result.Spiks -> {
@@ -244,7 +246,9 @@ class MainActivity : ComponentActivity() {
 
   private fun switchToSpiks() {
     val spiksFlow = SpiksFlow(router)
-    (application as Application).requireAppScope().inject(spiksFlow)
+    (application as Application)
+      .requireAppScope()
+      .inject(spiksFlow)
     spiksFlow.onFinishBuilder { result ->
       when (result) {
         SpiksFlow.Result.Main -> {

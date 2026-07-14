@@ -8,5 +8,4 @@ import com.thindie.engine.core.ViewState
 internal data class InputState(
   val input: String = "",
   val section: Section,
-  val isListening: Boolean = false,
 ) : ViewState

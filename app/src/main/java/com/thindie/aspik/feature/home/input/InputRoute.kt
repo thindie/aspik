@@ -14,12 +14,11 @@ fun <RESULT, ROUTE : Route> inputRoute(
 ) = RouteFactory.create(
   id = "common_input_route",
   initialState = InputState(section = section),
-  execute = { command: InputCommand, state: InputState -> screenFlow.inputExec(inputRepository, state, command) },
+  execute = { command: InputCommand, state: InputState ->
+    screenFlow.inputExec(inputRepository, state, command)
+  },
   section = section,
   routeContent = { screenScope: ScreenScope<InputState, InputCommand> ->
     InputScreenContent(screenScope)
-  },
-  stateSink = { screenScope: ScreenScope<InputState, InputCommand> ->
-    screenScope.inputSubscriptions(inputRepository)
   },
 )

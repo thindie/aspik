@@ -1,15 +1,9 @@
 package com.thindie.aspik.feature.home.input.domain
 
-import kotlinx.coroutines.flow.Flow
+import com.thindie.aspik.domain.SpeekNote
 
 interface InputRepository {
-  fun listen()
-
-  val convertedText: Flow<String>
-
   suspend fun sendText(text: String)
 
-  fun deleteAccumulated()
-
-  fun listenInvalidated()
+  suspend fun sendText(note: SpeekNote)
 }
