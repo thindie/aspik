@@ -278,9 +278,9 @@ fun BottomNavigationBar(
   val sections =
     remember {
       listOf(
+        HomeSection.Spiks,
         HomeSection.Main,
         HomeSection.Settings,
-        HomeSection.Spiks,
       )
     }
 
@@ -295,9 +295,9 @@ fun BottomNavigationBar(
     sections.forEach {
       val iconResId: Int =
         when (it) {
-          HomeSection.Main -> R.drawable.ic_main
-          HomeSection.Settings -> R.drawable.ic_settings
-          HomeSection.Spiks -> R.drawable.ic_spiks
+          HomeSection.Main -> R.drawable.ic_chat_24
+          HomeSection.Settings -> R.drawable.ic_settings_24
+          HomeSection.Spiks -> R.drawable.ic_copy_24
         }
       val titleResId: Int =
         when (it) {
