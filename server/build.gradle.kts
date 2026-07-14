@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -5,6 +6,7 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.ktlint)
   id("application")
+  alias(libs.plugins.shadowJar)
 }
 
 ktlint {
@@ -44,4 +46,13 @@ dependencies {
   implementation(libs.logback.classic)
 
   implementation(libs.ktor.server.websockets.jvm)
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+  archiveBaseName.set("aspik-stt-server")
+  archiveClassifier.set("")
+  archiveVersion.set("")
+  manifest {
+    attributes["Main-Class"] = "com.thindie.server.SttServerKt"
+  }
 }
