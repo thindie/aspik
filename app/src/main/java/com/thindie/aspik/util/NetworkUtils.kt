@@ -20,6 +20,7 @@ object NetworkUtils {
   private const val KEY_SERVER_PORT = "server_port"
   private const val DEFAULT_IP = "192.168.1.90"
   private const val DEFAULT_PORT = "8080"
+  private const val STT_ENDPOINT = "/speech"
 
   fun saveServerAddress(
     context: Context,
@@ -51,7 +52,7 @@ object NetworkUtils {
     onConnectResult: (Boolean) -> Unit = {},
   ): WebSocket {
     val (ip, port) = getServerAddress(context)
-    val url = "ws://$ip:$port/speech"
+    val url = "ws://$ip:$port$STT_ENDPOINT"
 
     val listener =
       object : WebSocketListener() {
@@ -68,7 +69,7 @@ object NetworkUtils {
           webSocket: WebSocket,
           text: String,
         ) {
-          // Сервер может что-то отвечать, если нужно
+          // no op
         }
 
         override fun onFailure(
@@ -76,7 +77,7 @@ object NetworkUtils {
           t: Throwable,
           response: Response?,
         ) {
-          Log.e(message = { "${t.cause} ${t.message}" })
+          Log.e(message = { "websocket: ${t.cause} ${t.message}" })
           this@NetworkUtils.webSocket = null
           isConnected = false
           onConnectResult(false)
