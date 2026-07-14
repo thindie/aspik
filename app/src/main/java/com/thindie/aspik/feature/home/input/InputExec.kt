@@ -35,6 +35,20 @@ internal suspend fun ScreenFlow<*, *>.inputExec(
     }
 
     is InputCommand.Input -> {
+      val string =
+        buildString {
+          if (state.input.isNotBlank()) {
+            append(state.input)
+            append(" ")
+            append(command.text)
+          } else {
+            append(command.text)
+          }
+        }
+      state.copy(input = string)
+    }
+
+    is InputCommand.ManualCorrection -> {
       state.copy(input = command.text)
     }
   }

@@ -7,5 +7,7 @@ internal sealed interface InputCommand : Command {
 
   data class Input(val text: String) : InputCommand
 
+  data class ManualCorrection(val text: String) : InputCommand
+
   data class SendText(val text: String) : InputCommand
 }
