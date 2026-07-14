@@ -312,8 +312,8 @@ fun BottomNavigationBar(
         onClick = {
           when (it) {
             HomeSection.Main -> onMainClick.invoke()
-            HomeSection.Settings -> onSettingsClick.invoke()
-            HomeSection.Spiks -> onSpiksClick.invoke()
+            HomeSection.Settings -> { }
+            HomeSection.Spiks -> { }
           }
         },
         isSelected = selected == it,
