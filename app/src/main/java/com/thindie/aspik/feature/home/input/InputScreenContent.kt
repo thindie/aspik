@@ -67,6 +67,13 @@ internal fun InputScreenContent(scope: ScreenScope<InputState, InputCommand>) {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End,
       ) {
+        if (state.input.isNotBlank()) {
+          Button(
+            text = stringResource(R.string.input_delete),
+            onClick = { scope.send(InputCommand.DeleteAccumulated) },
+          )
+          VSpacer(8.dp)
+        }
         Button(
           text = stringResource(R.string.input_send),
           onClick = { scope.send(InputCommand.SendText(state.input)) },

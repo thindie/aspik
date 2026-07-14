@@ -8,4 +8,6 @@ internal sealed interface InputCommand : Command {
   data object Listen : InputCommand
 
   data class SendText(val text: String) : InputCommand
+
+  data object DeleteAccumulated : InputCommand
 }
