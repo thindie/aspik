@@ -25,7 +25,7 @@ internal suspend fun ScreenFlow<*, *>.inputExec(
             note =
               SpeekNote(
                 id = Id(UUID.randomUUID().toString()),
-                note = state.input
+                note = state.input,
               ),
           )
         }

@@ -20,7 +20,7 @@ class ApplicationScope private constructor() {
 
   fun inject(homeFlow: HomeFlow) {
     if (inputRepository == null) {
-      inputRepository = InputRepositoryImpl(applicationContext, client)
+      inputRepository = InputRepositoryImpl(applicationContext, client, storage)
     }
     homeFlow.inputRepository = this.inputRepository!!
   }
@@ -32,7 +32,7 @@ class ApplicationScope private constructor() {
     spiksFlow.spiksRepository = this.spiksRepository!!
 
     if (inputRepository == null) {
-      inputRepository = InputRepositoryImpl(applicationContext, client)
+      inputRepository = InputRepositoryImpl(applicationContext, client, storage)
     }
     spiksFlow.inputRepository = this.inputRepository!!
   }
