@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 
@@ -36,6 +38,7 @@ fun TextField(
   maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
   textStyle: TextStyle = TextStyle.Default,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+  imeOptions: ImeAction? = null,
   leadingContent: (@Composable () -> Unit)? = null,
   trailingContent: (@Composable () -> Unit)? = null,
 ) {
@@ -74,13 +77,29 @@ fun TextField(
     singleLine = singleLine,
     maxLines = maxLines,
     textStyle = textStyle.copy(color = AppTheme.colors.contentPrimary),
-    keyboardOptions = keyboardOptions,
+    keyboardOptions =
+      if (imeOptions != null) {
+        KeyboardOptions(
+          imeAction = imeOptions,
+          keyboardType = keyboardOptions.keyboardType,
+          autoCorrect = keyboardOptions.autoCorrect,
+          capitalization = keyboardOptions.capitalization,
+        )
+      } else {
+        keyboardOptions
+      },
     decorationBox = { innerText ->
       Row(
         modifier =
           Modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .then(
+              if (singleLine) {
+                Modifier.height(56.dp)
+              } else {
+                Modifier.heightIn(min = 56.dp)
+              },
+            )
             .background(
               color = containerColor,
               shape = RoundedCornerShape(16.dp),

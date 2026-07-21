@@ -51,6 +51,11 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.thindie.aspik.feature.home.HomeFlow
+import com.thindie.aspik.feature.settings.SettingsFlow
+import com.thindie.aspik.feature.settings.main.settingsRoute
+import com.thindie.aspik.feature.spiks.SpiksFlow
+import com.thindie.aspik.feature.spiks.list.spiksRoute
 import com.thindie.engine.core.Deeplink
 import com.thindie.engine.core.Log
 import com.thindie.engine.core.Route
@@ -76,6 +81,7 @@ class MainActivity : ComponentActivity() {
     setContent {
       LaunchedEffect(Unit) {
         val deeplink = parseIntent()
+        switchToMain()
       }
       val themeSwitcher =
         remember {
@@ -144,6 +150,7 @@ class MainActivity : ComponentActivity() {
                           modifier = Modifier.align(Alignment.BottomCenter),
                           onMainClick = { switchToMain() },
                           onSettingsClick = { switchToSettings() },
+                          onSpiksClick = { switchToSpiks() },
                           selected = route.section,
                         )
                       }
@@ -155,6 +162,19 @@ class MainActivity : ComponentActivity() {
                           modifier = Modifier.align(Alignment.BottomCenter),
                           onMainClick = { switchToMain() },
                           onSettingsClick = {},
+                          onSpiksClick = { switchToSpiks() },
+                          selected = route.section,
+                        )
+                      }
+                    }
+                    is HomeSection.Spiks -> {
+                      Box(modifier = Modifier.systemBarsPadding()) {
+                        route.content.invoke()
+                        BottomNavigationBar(
+                          modifier = Modifier.align(Alignment.BottomCenter),
+                          onMainClick = { switchToMain() },
+                          onSettingsClick = { switchToSettings() },
+                          onSpiksClick = {},
                           selected = route.section,
                         )
                       }
@@ -185,9 +205,68 @@ class MainActivity : ComponentActivity() {
   }
 
   private fun switchToMain() {
+    val homeFlow = HomeFlow(router)
+    (application as Application)
+      .requireAppScope()
+      .inject(homeFlow)
+    homeFlow.onFinishBuilder { result ->
+      when (result) {
+        HomeFlow.Result.Spiks -> {
+          switchToSpiks()
+        }
+        HomeFlow.Result.Success -> {
+        }
+        HomeFlow.Result.Settings -> {
+          switchToSettings()
+        }
+      }
+    }
+
+    homeFlow
+      .switchFlow()
   }
 
   private fun switchToSettings() {
+    val settingsFlow = SettingsFlow(router)
+    (application as Application)
+      .requireAppScope()
+      .inject(settingsFlow)
+    settingsFlow.onFinishBuilder { result ->
+      when (result) {
+        SettingsFlow.Result.Spiks -> {
+          switchToSpiks()
+        }
+        SettingsFlow.Result.Success -> {
+        }
+        SettingsFlow.Result.Main -> {
+          switchToMain()
+        }
+      }
+    }
+
+    router.replaceTop(settingsRoute(settingsFlow))
+  }
+
+  private fun switchToSpiks() {
+    val spiksFlow = SpiksFlow(router)
+    (application as Application)
+      .requireAppScope()
+      .inject(spiksFlow)
+    spiksFlow.onFinishBuilder { result ->
+      when (result) {
+        SpiksFlow.Result.Main -> {
+          switchToMain()
+        }
+        SpiksFlow.Result.Success -> {
+        }
+        SpiksFlow.Result.Settings -> {
+          switchToSettings()
+        }
+      }
+      spiksFlow.switchFlow()
+    }
+
+    router.replaceTop(spiksRoute(spiksFlow))
   }
 }
 
@@ -196,11 +275,13 @@ fun BottomNavigationBar(
   modifier: Modifier = Modifier,
   onMainClick: () -> Unit,
   onSettingsClick: () -> Unit,
+  onSpiksClick: () -> Unit,
   selected: Section,
 ) {
   val sections =
     remember {
       listOf(
+        HomeSection.Spiks,
         HomeSection.Main,
         HomeSection.Settings,
       )
@@ -215,19 +296,27 @@ fun BottomNavigationBar(
     verticalAlignment = Alignment.CenterVertically,
   ) {
     sections.forEach {
-      val (icon, title) =
+      val iconResId: Int =
         when (it) {
-          HomeSection.Main -> 1 to 1
-          HomeSection.Settings -> 2 to 2
+          HomeSection.Main -> R.drawable.ic_chat_24
+          HomeSection.Settings -> R.drawable.ic_settings_24
+          HomeSection.Spiks -> R.drawable.ic_copy_24
+        }
+      val titleResId: Int =
+        when (it) {
+          HomeSection.Main -> R.string.main_title
+          HomeSection.Settings -> R.string.settings_title
+          HomeSection.Spiks -> R.string.spiks_title
         }
 
       Section(
-        title = stringResource(title),
-        icon = painterResource(icon),
+        title = stringResource(titleResId),
+        icon = painterResource(iconResId),
         onClick = {
           when (it) {
             HomeSection.Main -> onMainClick.invoke()
-            HomeSection.Settings -> onSettingsClick.invoke()
+            HomeSection.Settings -> { }
+            HomeSection.Spiks -> { }
           }
         },
         isSelected = selected == it,
@@ -293,4 +382,7 @@ sealed interface HomeSection : Section {
 
   @Immutable
   data object Settings : HomeSection
+
+  @Immutable
+  data object Spiks : HomeSection
 }

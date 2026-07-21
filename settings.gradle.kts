@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Aspik"
 include(":app")
 include(":core")
+include(":server")

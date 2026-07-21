@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Aspik</string>
+    <string name="main_title">Main</string>
+    <string name="settings_title">Settings</string>
+    <string name="spiks_title">Spiks</string>
+    <string name="input_title">Text to Speech</string>
+    <string name="input_placeholder">Type or speak...</string>
+    <string name="input_listening">Listening...</string>
+    <string name="input_speak">Speak</string>
+    <string name="input_send">Send</string>
+    <string name="input_delete">Delete</string>
+    <string name="input_error">Error occurred</string>
+
+    <!-- Server settings -->
+    <string name="server_title">Server Address</string>
+    <string name="server_ip_hint">IP address (e.g. 192.168.0.1)</string>
+    <string name="server_port_hint">Port (default: 8080)</string>
+    <string name="server_save">Save</string>
+    <string name="server_saved">Server address saved</string>
+    <string name="settings_ip_title">IP Address</string>
+    <string name="settings_ip_hint">Enter server IP (e.g. 192.168.0.1)</string>
+    <string name="settings_ip_save">Save</string>
+    <string name="settings_delete_text_on_send">Delete text after sending</string>
+
 </resources>

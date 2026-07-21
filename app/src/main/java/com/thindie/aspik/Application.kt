@@ -1,6 +1,7 @@
 package com.thindie.aspik
 
 import android.app.Application
+import com.thindie.aspik.di.ApplicationScope
 import com.thindie.engine.core.Log
 import com.thindie.engine.core.Router
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -18,6 +19,8 @@ class Application : Application() {
           Log.e({ throwable.message.toString() })
         },
     )
+
+  private var applicationScope: ApplicationScope? = null
 
   private var router: Router? = null
 
@@ -41,6 +44,13 @@ class Application : Application() {
         }
     }
     return requireNotNull(router)
+  }
+
+  fun requireAppScope(): ApplicationScope {
+    if (applicationScope == null) {
+      applicationScope = ApplicationScope.configure(this)
+    }
+    return requireNotNull(applicationScope)
   }
 
   companion object {
